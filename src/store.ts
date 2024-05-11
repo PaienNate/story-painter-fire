@@ -120,7 +120,7 @@ export const useStore = defineStore('main', {
     async tryFetchLog(key: string, password: string) {
       // https://weizaima.com/dice
       // 换成俺的地址……
-      const resp = await axios.get('https://worker.firehomework.top/api/load_data', {
+      const resp = await axios.get('https://worker.firehomework.top/dice/api/load_data', {
         params: { key, password }
       })
       return resp.data

@@ -69,7 +69,7 @@
           <el-switch v-model="exportOptions.textIndentAll" />
           <h4>真的是安慰开关</h4>
         </div>
-        <div>很烦躁，有人不想上班……</div>
+        <div>很烦躁，有人不想上班！！！！！……</div>
       </div>
     </div>
 
