@@ -1,11 +1,11 @@
 <template>
   <div style="width: 1000px; margin: 0 auto; max-width: 100%;">
     <h2 style="text-align: center;display: flex; align-items: center; justify-content: center; flex-flow: wrap;">
-      <span>海豹TRPG跑团Log着色器 V2.3.0</span>
+      <span>海豹TRPG跑团Log着色器-松子备用版 V2.3.0</span>
       <a style="margin:0 1rem" href="https://github.com/sealdice/story-painter" target="_blank"><img src="./assets/github-mark.svg" style="width: 1.2rem;"/></a>
       <el-button type="primary" @click="backV1">官网</el-button>
     </h2>
-    <div style="text-align: center;margin-bottom: 1rem;">SealDice骰QQ群 524364253 [群介绍中有其余3群]</div>
+    <div style="text-align: center;margin-bottom: 1rem;">SealDice骰QQ群 524364253 [群介绍中有其余3群]  -  本修改版联系：QQ:1101839859</div>
     <!-- <div style="text-align: center;"><b><el-link type="primary" target="_blank" href="https://dice.weizaima.com/">新骰系测试中</el-link></b>，快来提需求！</div> -->
     <div class="options" style="display: flex; flex-wrap: wrap; text-align: center;">
       <div>
@@ -67,9 +67,9 @@
       <div>
         <div class="switch">
           <el-switch v-model="exportOptions.textIndentAll" />
-          <h4>安慰开关</h4>
+          <h4>真的是安慰开关</h4>
         </div>
-        <div>没有任何作用，看起来对称一点</div>
+        <div>很烦躁，有人不想上班……</div>
       </div>
     </div>
 
