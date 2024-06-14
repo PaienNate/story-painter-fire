@@ -1,114 +1,113 @@
 <template>
   <n-config-provider :theme-overrides="themeOverrides">
-  <n-layout>
-    <n-layout-header class="bg-slate-100 dark:bg-inherit">
-      <n-flex class="py-3 text-2xl" size="large" align="center" justify="center" wrap>
-        <n-flex align="center" justify="center">
-          <strong>海豹TRPG跑团Log着色器 - 松子魔改了一把版</strong>
-          <n-tag type="success" size="small" :bordered="false">v2.5.0</n-tag>
-        </n-flex>
-        <n-flex align="center" justify="center">
-          <n-icon>
-            <a href="https://github.com/sealdice/story-painter" target="_blank">
-              <logo-github/>
-            </a>
-          </n-icon>
-          <n-button type="primary" @click="backV1">官网</n-button>
-        </n-flex>
-      </n-flex>
-    </n-layout-header>
-    <n-layout-content class="bg-slate-100 dark:bg-inherit">
-      <div style="width: 1000px; margin: 0 auto; max-width: 100%; padding-bottom: 3rem">
-        <n-text type="info" italic class="block text-center my-1">SealDice骰QQ群 524364253 [群介绍中有其余3群]</n-text>
-        <option-view></option-view>
-        <n-spin :show="loading">
-          <template #description>
-            正在试图加载远程记录……
-          </template>
-          <div class="pc-list">
-            <div v-for="(i, index) in store.pcList">
-              <div style="display: flex; align-items: center; width: 26rem;">
-                <n-button type="error" size="small" secondary style="padding: 0 1rem " @click="deletePc(index, i)"
-                          :disabled="isShowPreview || isShowPreviewBBS || isShowPreviewTRG">
-                  <template #icon>
-                    <n-icon>
-                      <icon-delete></icon-delete>
-                    </n-icon>
-                  </template>
-                  <span v-if="notMobile">删除</span>
-                </n-button>
-
-                <n-input :disabled="isShowPreview || isShowPreviewBBS || isShowPreviewTRG" v-model:value="i.name"
-                         class="w-50 m-2"
-                         :prefix-icon="User" @focus="nameFocus(i)" @change="nameChanged(i)"/>
-
-                <n-input :disabled="true" v-model:value="i.IMUserId" style="width: 24rem"/>
-
-                <n-select v-model:value="i.role" class="m-2 w-60" style="width: 24rem"
-                          :options="[{value: '主持人', label: '主持人'}, {value: '角色', label: '角色'}, {value: '骰子', label: '骰子'}, {value: '隐藏', label: '隐藏'}]"/>
-
-                <n-color-picker v-model:value="i.color" :show-alpha="false" show-preview
-                                :swatches="colors"
-                                :on-update:value="(v) => colorChanged(v, i)"/>
-              </div>
-            </div>
-          </div>
-
-          <n-flex size="small" justify="center" align="center" class="my-4">
-            <n-flex size="small" justify="center" align="center" class="mr-2">
-              <n-button secondary type="primary" @click="exportRecordRaw">下载原始文件</n-button>
-              <!-- <n-button secondary type="primary" v-show="false" @click="exportRecordQQ">下载QQ风格记录</n-button>-->
-              <!-- <n-button secondary type="primary" v-show="false" @click="exportRecordIRC">下载IRC风格记录</n-button>-->
-              <n-button secondary type="primary" @click="exportRecordDOC">下载Word</n-button>
-            </n-flex>
-            <!-- <n-button @click="showPreview">预览</n-button> -->
-            <div>
-              <n-checkbox label="预览" v-model:checked="isShowPreview" :border="true"
-                          @click="previewClick('preview')"/>
-              <n-checkbox label="论坛代码" v-model:checked="isShowPreviewBBS" :border="true"
-                          @click="previewClick('bbs')"/>
-              <n-checkbox label="回声工坊" v-model:checked="isShowPreviewTRG" :border="true"
-                          @click="previewClick('trg')"/>
-            </div>
-            <n-divider vertical/>
-            <div>
-              <n-tooltip class="box-item" placement="top-start">
-                <template #trigger>
-                  <n-button type="primary" text @click="refreshColors">刷新色板</n-button>
-                </template>
-                重新随机生成上方颜色选择中的预置颜色
-              </n-tooltip>
-            </div>
+    <n-layout>
+      <n-layout-header class="bg-slate-100 dark:bg-inherit">
+        <n-flex class="py-3 text-2xl" size="large" align="center" justify="center" wrap>
+          <n-flex align="center" justify="center">
+            <strong>海豹TRPG跑团Log着色器(NOT OFFICIAL)</strong>
+            <n-tag type="success" size="small" :bordered="false">v2.5.0</n-tag>
           </n-flex>
+          <n-flex align="center" justify="center">
+            <n-icon>
+              <a href="https://github.com/PaienNate/story-painter-fire" target="_blank">
+                <logo-github />
+              </a>
+            </n-icon>
+            <n-button type="primary" @click="backV1">官网</n-button>
+            <n-button @click="GoBlog">松子博客</n-button>
+          </n-flex>
+        </n-flex>
+      </n-layout-header>
+      <n-layout-content class="bg-slate-100 dark:bg-inherit">
+        <div style="width: 1000px; margin: 0 auto; max-width: 100%; padding-bottom: 3rem">
+          <n-text type="info" italic class="block text-center my-1">SealDice骰QQ群 524364253 [群介绍中有其余3群]</n-text>
+          <n-text type="info" italic class="block text-center my-2">想自己部署染色器后端？<a href=https://github.com/sealdice/story-painter-cfbackend>(点我直达)</a></n-text>
+          <option-view></option-view>
+          <n-spin :show="loading">
+            <template #description>
+              正在试图加载远程记录……
+            </template>
+            <div class="pc-list">
+              <div v-for="(i, index) in store.pcList">
+                <div style="display: flex; align-items: center; width: 26rem;">
+                  <n-button type="error" size="small" secondary style="padding: 0 1rem " @click="deletePc(index, i)"
+                    :disabled="isShowPreview || isShowPreviewBBS || isShowPreviewTRG">
+                    <template #icon>
+                      <n-icon>
+                        <icon-delete></icon-delete>
+                      </n-icon>
+                    </template>
+                    <span v-if="notMobile">删除</span>
+                  </n-button>
 
-          <code-mirror v-show="!(isShowPreview || isShowPreviewBBS || isShowPreviewTRG)" ref="editor"
-                       class="mt-4"
-                       @change="onChange">
-            <div class="z-50 absolute right-2 flex flex-col items-center">
-              <div class="">
-                <n-button secondary @click="clearText" id="btnCopyPreviewBBS" type="primary" class="w-full">清空内容
-                </n-button>
-              </div>
-              <div class="mt-1">
-                <n-button secondary @click="doFlush" type="primary" class="w-full">强制刷新</n-button>
-              </div>
-              <div class="mt-1">
-                <n-checkbox label="编辑器染色" v-model:checked="store.doEditorHighlight" :border="false" class="w-full"
-                            @click.native="doEditorHighlightClick($event)"/>
+                  <n-input :disabled="isShowPreview || isShowPreviewBBS || isShowPreviewTRG" v-model:value="i.name"
+                    class="w-50 m-2" :prefix-icon="User" @focus="nameFocus(i)" @change="nameChanged(i)" />
+
+                  <n-input :disabled="true" v-model:value="i.IMUserId" style="width: 24rem" />
+
+                  <n-select v-model:value="i.role" class="m-2 w-60" style="width: 24rem"
+                    :options="[{ value: '主持人', label: '主持人' }, { value: '角色', label: '角色' }, { value: '骰子', label: '骰子' }, { value: '隐藏', label: '隐藏' }]" />
+
+                  <n-color-picker v-model:value="i.color" :show-alpha="false" show-preview :swatches="colors"
+                    :on-update:value="(v) => colorChanged(v, i)" />
+                </div>
               </div>
             </div>
-          </code-mirror>
 
-          <n-message-provider>
-            <preview-main :is-show="isShowPreview" :preview-items="previewItems"></preview-main>
-            <preview-bbs :is-show="isShowPreviewBBS" :preview-items="previewItems"></preview-bbs>
-            <preview-trg :is-show="isShowPreviewTRG" :preview-items="previewItems"></preview-trg>
-          </n-message-provider>
-        </n-spin>
-      </div>
-    </n-layout-content>
-  </n-layout>
-</n-config-provider>
+            <n-flex size="small" justify="center" align="center" class="my-4">
+              <n-flex size="small" justify="center" align="center" class="mr-2">
+                <n-button secondary type="primary" @click="exportRecordRaw">下载原始文件</n-button>
+                <!-- <n-button secondary type="primary" v-show="false" @click="exportRecordQQ">下载QQ风格记录</n-button>-->
+                <!-- <n-button secondary type="primary" v-show="false" @click="exportRecordIRC">下载IRC风格记录</n-button>-->
+                <n-button secondary type="primary" @click="exportRecordDOC">下载Word</n-button>
+              </n-flex>
+              <!-- <n-button @click="showPreview">预览</n-button> -->
+              <div>
+                <n-checkbox label="预览" v-model:checked="isShowPreview" :border="true"
+                  @click="previewClick('preview')" />
+                <n-checkbox label="论坛代码" v-model:checked="isShowPreviewBBS" :border="true"
+                  @click="previewClick('bbs')" />
+                <n-checkbox label="回声工坊" v-model:checked="isShowPreviewTRG" :border="true"
+                  @click="previewClick('trg')" />
+              </div>
+              <n-divider vertical />
+              <div>
+                <n-tooltip class="box-item" placement="top-start">
+                  <template #trigger>
+                    <n-button type="primary" text @click="refreshColors">刷新色板</n-button>
+                  </template>
+                  重新随机生成上方颜色选择中的预置颜色
+                </n-tooltip>
+              </div>
+            </n-flex>
+
+            <code-mirror v-show="!(isShowPreview || isShowPreviewBBS || isShowPreviewTRG)" ref="editor" class="mt-4"
+              @change="onChange">
+              <div class="z-50 absolute right-2 flex flex-col items-center">
+                <div class="">
+                  <n-button secondary @click="clearText" id="btnCopyPreviewBBS" type="primary" class="w-full">清空内容
+                  </n-button>
+                </div>
+                <div class="mt-1">
+                  <n-button secondary @click="doFlush" type="primary" class="w-full">强制刷新</n-button>
+                </div>
+                <div class="mt-1">
+                  <n-checkbox label="编辑器染色" v-model:checked="store.doEditorHighlight" :border="false" class="w-full"
+                    @click.native="doEditorHighlightClick($event)" />
+                </div>
+              </div>
+            </code-mirror>
+
+            <n-message-provider>
+              <preview-main :is-show="isShowPreview" :preview-items="previewItems"></preview-main>
+              <preview-bbs :is-show="isShowPreviewBBS" :preview-items="previewItems"></preview-bbs>
+              <preview-trg :is-show="isShowPreviewTRG" :preview-items="previewItems"></preview-trg>
+            </n-message-provider>
+          </n-spin>
+        </div>
+      </n-layout-content>
+    </n-layout>
+  </n-config-provider>
 </template>
 
 <script setup lang="ts">
@@ -130,7 +129,7 @@ import PreviewItem from './components/previews/preview-main-item.vue'
 import { LogItem, CharItem, packNameId } from "./logManager/types";
 import { setCharInfo } from './logManager/importers/_logImpoter'
 import { msgCommandFormat, msgImageFormat, msgIMUseridFormat, msgOffTopicFormat, msgAtFormat } from "./utils";
-import { NButton, NText, useMessage, useModal, useNotification,type GlobalThemeOverrides } from "naive-ui";
+import { NButton, NText, useMessage, useModal, useNotification, type GlobalThemeOverrides } from "naive-ui";
 import { User, LogoGithub, Delete as IconDelete } from '@vicons/carbon'
 import { breakpointsTailwind, useBreakpoints, useDark, useToggle } from '@vueuse/core'
 import OptionView from "./components/OptionView.vue";
@@ -170,7 +169,7 @@ const themeOverrides = ref<GlobalThemeOverrides>({})
 const generateColors = ref<string[]>([])
 
 primaryColor.value = randomColor({
-   luminosity: 'bright'
+  luminosity: 'bright'
 })
 
 setThemeOverrides()
@@ -201,8 +200,13 @@ const colorChanged = debounce((v: string, i: CharItem) => {
 
 const backV1 = () => {
   // location.href = location.origin + '/v1/' + location.search + location.hash;
-  location.href = 'https://www.baidu.com';
+  location.href = 'https://dice.weizaima.com/';
 }
+const GoBlog = () => {
+  // location.href = location.origin + '/v1/' + location.search + location.hash;
+  location.href = 'https://firehomework.top/';
+}
+
 
 // 清空文本
 const clearText = () => {
@@ -248,8 +252,8 @@ function setupUA() {
   if (deviceType.type === 'mobile') {
     // 经测可以使用的
     switch (browser) {
-        // case '360 Browser': // 手机360 但是手机360无特征，自己是Chrome WebView
-        // 手机:X浏览器 Chrome WebView无特征
+      // case '360 Browser': // 手机360 但是手机360无特征，自己是Chrome WebView
+      // 手机:X浏览器 Chrome WebView无特征
       case 'Edge':
       case 'Chrome':
       case 'Chromium':
@@ -263,10 +267,10 @@ function setupUA() {
     switch (browser) {
       case 'baiduboxapp': // 手机:百度浏览器
       case 'QQBrowser': // 手机:搜狗浏览器极速版，手机:QQ浏览器
-        // 手机:万能浏览器，Chrome WebView无特征，会直接崩溃
+      // 手机:万能浏览器，Chrome WebView无特征，会直接崩溃
       case 'UCBrowser': // 手机:UC浏览器
       case 'Quark': // 手机:夸克
-        // 手机:Via浏览器，Chrome WebView无特征，会直接崩溃
+      // 手机:Via浏览器，Chrome WebView无特征，会直接崩溃
       case 'QQ': // 手机:QQ
       case 'WeChat':
         downloadUsableRank.value = 0
@@ -454,13 +458,21 @@ store.colorMapLoad();
 watch(() => store.exportOptions.offTopicHide, showPreview)
 
 const editor = ref()
-watch(isDark, (test,test2) => {
+watch(isDark, (test, test2) => {
   console.log(test)
-  if (test){
+  if (test) {
     primaryColor.value = randomColor({
-   luminosity: 'dark'
-})
-setThemeOverrides()
+      luminosity: 'dark'
+    }
+    )
+    setThemeOverrides()
+  }
+  else {
+    primaryColor.value = randomColor({
+      luminosity: 'light'
+    }
+    )
+    setThemeOverrides()
   }
   console.log('dark watch')
   store.reloadEditor()
@@ -480,23 +492,23 @@ const deletePc = (index: number, i: CharItem) => {
     content: `即将删除角色「${i.name}」及其全部发言，确定吗？`,
     footer: () => [
       h(
-          NButton,
-          { type: 'default', onClick: () => m.destroy(), style: { marginRight: '1rem' } },
-          () => '取消',
+        NButton,
+        { type: 'default', onClick: () => m.destroy(), style: { marginRight: '1rem' } },
+        () => '取消',
       ),
       h(
-          NButton,
-          {
-            type: 'primary', onClick: () => {
-              try {
-                store.pcList.splice(index, 1);
-                logMan.deleteByCharItem(i);
-              } finally {
-                m.destroy()
-              }
+        NButton,
+        {
+          type: 'primary', onClick: () => {
+            try {
+              store.pcList.splice(index, 1);
+              logMan.deleteByCharItem(i);
+            } finally {
+              m.destroy()
             }
-          },
-          () => '确定'
+          }
+        },
+        () => '确定'
       ),
     ]
   })
@@ -539,30 +551,30 @@ const nameChanged = (i: CharItem) => {
       },
       content: () => [
         h(
-            NText,
-            { innerHTML: `即将进行名字变更 <b>${name1} -> ${name2}</b><br />将修改信息行，并在文本中进行批量替换（${name1w} 替换为 ${name2w}），确定吗？` },
+          NText,
+          { innerHTML: `即将进行名字变更 <b>${name1} -> ${name2}</b><br />将修改信息行，并在文本中进行批量替换（${name1w} 替换为 ${name2w}），确定吗？` },
         ),
       ],
       footer: () => [
         h(
-            NButton,
-            { type: 'default', onClick: () => m.destroy(), style: { marginRight: '1rem' } },
-            () => '取消',
+          NButton,
+          { type: 'default', onClick: () => m.destroy(), style: { marginRight: '1rem' } },
+          () => '取消',
         ),
         h(
-            NButton,
-            {
-              type: 'primary', onClick: () => {
-                try {
-                  logMan.rename(i, oldName, newName)
-                } catch (_e) {
-                  i.name = oldName;
-                } finally {
-                  m.destroy()
-                }
+          NButton,
+          {
+            type: 'primary', onClick: () => {
+              try {
+                logMan.rename(i, oldName, newName)
+              } catch (_e) {
+                i.name = oldName;
+              } finally {
+                m.destroy()
               }
-            },
-            () => '确定'
+            }
+          },
+          () => '确定'
         ),
       ]
     })
@@ -647,38 +659,38 @@ const doEditorHighlightClick = (e: any) => {
         content: '部分移动设备上的特定浏览器可能会因为兼容性问题而卡死，继续吗？',
         footer: () => [
           h(
-              NButton,
-              {
-                type: 'default',
-                onClick: () => {
-                  store.doEditorHighlight = false
-                  m.destroy()
-                  setTimeout(() => {
-                    doFlush()
-                  }, 3000)
-                },
-                style: { marginRight: '1rem' }
+            NButton,
+            {
+              type: 'default',
+              onClick: () => {
+                store.doEditorHighlight = false
+                m.destroy()
+                setTimeout(() => {
+                  doFlush()
+                }, 3000)
               },
-              () => '取消',
+              style: { marginRight: '1rem' }
+            },
+            () => '取消',
           ),
           h(
-              NButton,
-              {
-                type: 'primary', onClick: () => {
-                  try {
-                    doHl()
-                  } catch (_e) {
-                    // 重新关闭
-                    setTimeout(() => {
-                      store.doEditorHighlight = false
-                      store.reloadEditor()
-                    }, 500)
-                  } finally {
-                    m.destroy()
-                  }
+            NButton,
+            {
+              type: 'primary', onClick: () => {
+                try {
+                  doHl()
+                } catch (_e) {
+                  // 重新关闭
+                  setTimeout(() => {
+                    store.doEditorHighlight = false
+                    store.reloadEditor()
+                  }, 500)
+                } finally {
+                  m.destroy()
                 }
-              },
-              () => '确定'
+              }
+            },
+            () => '确定'
           ),
         ]
       })
@@ -708,18 +720,18 @@ const code = ref("")
   width: 50%;
 }
 
-.options > div {
+.options>div {
   width: 30rem;
   max-width: 30rem;
   margin-bottom: 2rem;
 }
 
-.options > div > .switch {
+.options>div>.switch {
   display: flex;
   align-items: center;
   justify-content: center;
 
-  & > h4 {
+  &>h4 {
     margin-top: 0rem;
     margin-bottom: 0rem;
     margin-left: 1rem;
