@@ -1,9 +1,10 @@
 <template>
+  <n-config-provider :theme-overrides="themeOverrides">
   <n-layout>
     <n-layout-header class="bg-slate-100 dark:bg-inherit">
       <n-flex class="py-3 text-2xl" size="large" align="center" justify="center" wrap>
         <n-flex align="center" justify="center">
-          <strong>海豹TRPG跑团Log着色器</strong>
+          <strong>海豹TRPG跑团Log着色器 - 松子魔改了一把版</strong>
           <n-tag type="success" size="small" :bordered="false">v2.5.0</n-tag>
         </n-flex>
         <n-flex align="center" justify="center">
@@ -107,6 +108,7 @@
       </div>
     </n-layout-content>
   </n-layout>
+</n-config-provider>
 </template>
 
 <script setup lang="ts">
@@ -128,11 +130,13 @@ import PreviewItem from './components/previews/preview-main-item.vue'
 import { LogItem, CharItem, packNameId } from "./logManager/types";
 import { setCharInfo } from './logManager/importers/_logImpoter'
 import { msgCommandFormat, msgImageFormat, msgIMUseridFormat, msgOffTopicFormat, msgAtFormat } from "./utils";
-import { NButton, NText, useMessage, useModal, useNotification } from "naive-ui";
+import { NButton, NText, useMessage, useModal, useNotification,type GlobalThemeOverrides } from "naive-ui";
 import { User, LogoGithub, Delete as IconDelete } from '@vicons/carbon'
 import { breakpointsTailwind, useBreakpoints, useDark, useToggle } from '@vueuse/core'
 import OptionView from "./components/OptionView.vue";
 import randomColor from "randomcolor";
+
+import { generate } from '@ant-design/colors'
 
 const breakpoints = useBreakpoints(breakpointsTailwind)
 const notMobile = breakpoints.greater('sm')
@@ -157,6 +161,32 @@ const isShowPreview = ref(false)
 const isShowPreviewBBS = ref(false)
 const isShowPreviewTRG = ref(false)
 
+// 乐子：随机主题色
+// 定义一个主色
+const primaryColor = ref('#FFFFFF')
+// theme-overrides
+const themeOverrides = ref<GlobalThemeOverrides>({})
+// generate生成的颜色
+const generateColors = ref<string[]>([])
+
+primaryColor.value = randomColor({
+   luminosity: 'bright'
+})
+
+setThemeOverrides()
+function setThemeOverrides() {
+  generateColors.value = generate(primaryColor.value)
+  const commonColors = {
+    primaryColor: generateColors.value[5],
+    primaryColorHover: generateColors.value[4],
+    primaryColorSuppl: generateColors.value[4],
+    primaryColorPressed: generateColors.value[6]
+  }
+  themeOverrides.value.common = commonColors
+}
+
+
+
 const colors = ref<string[]>([])
 const refreshColors = () => {
   colors.value = randomColor({ count: 16 })
@@ -171,7 +201,7 @@ const colorChanged = debounce((v: string, i: CharItem) => {
 
 const backV1 = () => {
   // location.href = location.origin + '/v1/' + location.search + location.hash;
-  location.href = 'https://dice.weizaima.com';
+  location.href = 'https://www.baidu.com';
 }
 
 // 清空文本
@@ -424,7 +454,14 @@ store.colorMapLoad();
 watch(() => store.exportOptions.offTopicHide, showPreview)
 
 const editor = ref()
-watch(isDark, () => {
+watch(isDark, (test,test2) => {
+  console.log(test)
+  if (test){
+    primaryColor.value = randomColor({
+   luminosity: 'dark'
+})
+setThemeOverrides()
+  }
   console.log('dark watch')
   store.reloadEditor()
 })
@@ -583,6 +620,9 @@ const onChange = (v: ViewUpdate) => {
   // payloadText = store.editor.state.doc.toString()
   // let isLog = false
 }
+
+
+
 
 const doEditorHighlightClick = (e: any) => {
   // 因为原生click事件会执行两次，第一次在label标签上，第二次在input标签上，故此处理
