@@ -4,7 +4,7 @@
       <n-layout-header class="bg-slate-100 dark:bg-inherit">
         <n-flex class="py-3 text-2xl" size="large" align="center" justify="center" wrap>
           <n-flex align="center" justify="center">
-            <strong>海豹TRPG跑团Log着色器(NOT OFFICIAL)</strong>
+            <strong>第三方海豹TRPG跑团Log着色器</strong>
             <n-tag type="success" size="small" :bordered="false">v2.5.0</n-tag>
           </n-flex>
           <n-flex align="center" justify="center">
@@ -20,6 +20,21 @@
       </n-layout-header>
       <n-layout-content class="bg-slate-100 dark:bg-inherit">
         <div style="width: 1000px; margin: 0 auto; max-width: 100%; padding-bottom: 3rem">
+          <n-text type="warning"  class="text-center block my-1" style="font-size: 12px;">
+          本网站使用百度统计，百度（“Baidu”）提供的网络分析服务。百度统计使用Cookies来帮助网站分析用户如何使用网站。
+          <br>
+        由Cookies产生的有关您使用本网站的信息(包括您的IP地址)将被传输到百度，百度统计将使用这些信息评估您对网站的使用情况，
+        <br>
+        为网站运营商编写网站活动报告，并提供与网站活动和互联网使用有关的其他服务。
+        <br>
+        百度也可以根据法律要求将该信息转让给第三方，或者该第三方代表百度处理该信息。
+        <br>
+        百度不会将您的IP地址与百度持有的任何其他数据关联。
+        <br>
+        本网站使用百度统计仅用于统计不同地区访问的情况，以及不同浏览器的访问情况。
+        <br>
+        如果您极度注重自身隐私，可以考虑使用ADBlocker等插件阻止JS加载，或联系骰主切换到官方染色器。
+        </n-text>
           <n-text type="info" italic class="block text-center my-1">SealDice骰QQ群 524364253 [群介绍中有其余3群]</n-text>
           <n-text type="info" italic class="block text-center my-2">想自己部署染色器后端？<a href=https://github.com/sealdice/story-painter-cfbackend>(点我直达)</a></n-text>
           <option-view></option-view>
