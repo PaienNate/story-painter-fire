@@ -3,7 +3,7 @@
     <n-layout-header class="bg-slate-100 dark:bg-inherit">
       <n-flex class="py-3 text-2xl" size="large" align="center" justify="center" wrap>
         <n-flex align="center" justify="center">
-          <strong>海豹TRPG跑团Log着色器</strong>
+          <strong>第三方TRPG跑团Log着色器-Based On Cloudflare Worker</strong>
           <n-tag type="success" size="small" :bordered="false">v2.5.1</n-tag>
         </n-flex>
         <n-flex align="center" justify="center">
