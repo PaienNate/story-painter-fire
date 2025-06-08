@@ -327,9 +327,9 @@ onMounted(async () => {
     
             logMan.lastText = '';
             logMan.syncChange(text, [0, store.editor.state.doc.length], [0, text.length])
-            store.editor.dispatch({
-              changes: { from: 0, to: store.editor.state.doc.length, insert: text }
-            })
+            // store.editor.dispatch({
+            //   changes: { from: 0, to: store.editor.state.doc.length, insert: text }
+            // })
           });
         }
         break
