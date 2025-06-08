@@ -295,12 +295,24 @@ onMounted(async () => {
 
       switch(record.client) {
         case 'Parquet' : {
-          const uint8 = Uint8Array.from(atob(record.data), c => c.charCodeAt(0))
-          const asyncBuffer = await asyncBufferFrom({file: new Blob([uint8]),byteLength:uint8.byteLength})
+          const uint8 = Uint8Array.from(atob(record.data), c => c.charCodeAt(0));
+          // 将 Blob 转换为 File（因为 asyncBufferFrom 需要 File 类型）
+          const file = new File([uint8], "data.parquet", {
+            type: "application/octet-stream", // 设置 MIME 类型（如果是 Parquet 文件）
+            lastModified: Date.now(),         // File 必须包含 lastModified
+          });
+
+          // 调用 asyncBufferFrom
+          const asyncBuffer = await asyncBufferFrom({
+            file, // 使用 File 而不是 Blob
+            byteLength: uint8.byteLength,
+          });
+
+          // 读取 Parquet 文件
           const res = await parquetReadObjects({
-            file:asyncBuffer,
+            file: asyncBuffer,
             compressors,
-          })
+          });
           nextTick(() => {
             const text = JSON.stringify({
               items: res.map(v => {
