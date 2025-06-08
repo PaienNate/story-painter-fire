@@ -27,10 +27,10 @@ export default defineConfig({
         NaiveUiResolver(),
       ],
       dts: 'src/components.d.ts',
-    }),
-    legacy({
-      targets: ['defaults', 'not IE 11']
-    })
+    })// ,
+    // legacy({
+    //   targets: ['defaults', 'not IE 11']
+    // })
   ],
   server: {
     proxy: {
